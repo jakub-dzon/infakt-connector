@@ -22,3 +22,10 @@ log4j = {
 
     warn   'org.mortbay.log'
 }
+
+infakt {
+    api {
+        key = ""
+        url = "https://api.infakt.pl/v3/clients.json"
+    }
+}

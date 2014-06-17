@@ -1,3 +1,5 @@
+import grails.plugins.rest.client.RestBuilder
+
 class InfaktConnectorGrailsPlugin {
     // the plugin version
     def version = "0.1"
@@ -40,7 +42,7 @@ Grails plugin providing easy way of integrating with Infakt (http://infakt.pl) A
     }
 
     def doWithSpring = {
-        // TODO Implement runtime spring config (optional)
+        restBuilder(RestBuilder)
     }
 
     def doWithDynamicMethods = { ctx ->
