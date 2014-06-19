@@ -17,6 +17,8 @@ log4j = {
             'net.sf.ehcache.hibernate'
 
     warn 'org.mortbay.log'
+
+    debug 'grails.app.services.org.singularitylab.connector.infakt'
 }
 
 infakt {

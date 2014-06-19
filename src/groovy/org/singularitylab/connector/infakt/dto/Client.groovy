@@ -18,7 +18,7 @@ class Client {
     String postal_code
     String nip
     String phone_number
-    boolean same_forward_address
+    Boolean same_forward_address
     String web_site
     String email
     String note
@@ -27,7 +27,7 @@ class Client {
     String mailing_street
     String mailing_city
     String mailing_postal_code
-    int days_to_payment
+    Integer days_to_payment
     String invoice_note
     PaymentMethod payment_method
 
