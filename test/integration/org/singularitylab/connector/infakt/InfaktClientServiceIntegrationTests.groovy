@@ -3,6 +3,8 @@ package org.singularitylab.connector.infakt
 import grails.test.mixin.TestFor
 import org.junit.Test
 
+import static org.junit.Assert.*
+
 /**
  *
  *
@@ -14,8 +16,28 @@ class InfaktClientServiceIntegrationTests {
 
     @Test
     void shouldGetDataFromInfakt() {
-        println service.getClient("5260304484")
+        //Given
+        def nip = "5260304484"
+
+        //When
+        def clients = service.getClient(nip)
+
+        //Then
+        assertNotNull clients
+        assertEquals clients.size(), 1
+        assertEquals nip, clients.get(0).nip
     }
 
+    @Test
+    void shouldNotGetDataFromInfaktForNotFoundClient() {
+        //Given
+        def nip = "111111"
 
+        //When
+        def clients = service.getClient(nip)
+
+        //Then
+        assertNotNull clients
+        assertEquals clients.size(), 0
+    }
 }

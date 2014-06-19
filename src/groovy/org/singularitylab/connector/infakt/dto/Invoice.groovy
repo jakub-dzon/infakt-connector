@@ -1,11 +1,14 @@
 package org.singularitylab.connector.infakt.dto
 
+import groovy.transform.ToString
+
 /**
  *
  *
  * @author Jakub Dzon
  *
  */
+@ToString
 class Invoice {
     int id
     String number

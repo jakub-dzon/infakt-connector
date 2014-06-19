@@ -1,25 +1,29 @@
 package org.singularitylab.connector.infakt
 
-import grails.plugins.rest.client.RestBuilder
-import grails.util.Holders
+import org.singularitylab.connector.infakt.dto.Client
 
-class InfaktClientService {
+/**
+ * Service providing CRUD operations for Infakt Clients.
+ *
+ * @author Jakub Dzon
+ *
+ */
+class InfaktClientService extends InfaktService {
 
-    def infaktUrl = Holders.config.infakt.api.url
+    def serviceUrl = infaktUrl + "/clients.json"
 
-    def infaktApiKey = Holders.config.infakt.api.key
-
-    def restBuilder = new RestBuilder()
-
+    /**
+     * Retrieve client data for one's VAT ID number
+     *
+     * @param vatId VAT ID number of a client
+     * @return {@link Client} object representing a client stored in Infakt
+     */
     def getClient(String vatId) {
-        def resp = restBuilder.get(infaktUrl) {
-            header 'X-inFakt-ApiKey', infaktApiKey
-            json {
-                q {
-                    nip_eq = vatId
-                }
-            }
+        def resp = restBuilder.get(serviceUrl + "?q[nip_eq]=${vatId}") {
+            header HEADER_API_KEY, infaktApiKey
         }
-        resp.json
+        resp.json.entities.collect {
+            new Client(it)
+        }
     }
 }
