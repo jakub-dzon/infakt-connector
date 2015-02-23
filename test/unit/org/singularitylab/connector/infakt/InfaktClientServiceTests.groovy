@@ -3,6 +3,7 @@ package org.singularitylab.connector.infakt
 import grails.plugins.rest.client.RestBuilder
 import grails.test.mixin.TestFor
 import org.codehaus.groovy.grails.web.json.JSONObject
+import org.junit.Before
 import org.junit.Test
 import org.singularitylab.connector.infakt.dto.Client
 

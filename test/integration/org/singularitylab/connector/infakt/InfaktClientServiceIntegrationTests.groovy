@@ -1,6 +1,5 @@
 package org.singularitylab.connector.infakt
 
-import grails.test.mixin.TestFor
 import org.junit.Test
 import org.singularitylab.connector.infakt.dto.Client
 
@@ -12,10 +11,11 @@ import static org.junit.Assert.*
  * @author Jakub Dzon
  *
  */
-@TestFor(InfaktClientService)
-class InfaktClientServiceIntegrationTests {
+class InfaktClientServiceIntegrationTests extends GroovyTestCase {
 
-    private static final String TEST_CLIENT_NAME = "Test client"
+    private static final String TEST_CLIENT_NAME = "Zażółć gęślą jaźń"
+
+    def infaktClientService
 
     @Test
     void shouldGetDataFromInfaktByNip() {
@@ -23,27 +23,25 @@ class InfaktClientServiceIntegrationTests {
         def nip = "5260304484"
 
         //When
-        def clients = service.findByNip(nip)
+        def client = infaktClientService.findByNip(nip)
 
         //Then
-        assertNotNull clients
-        assertEquals clients.size(), 1
-        assertEquals nip, clients.get(0).nip
+        assertNotNull client
+        assertEquals nip, client.nip
     }
 
     @Test
-      void shouldGetDataFromInfaktByEmail() {
-          //Given
-          def email = "jakub@dzon.pl"
+    void shouldGetDataFromInfaktByEmail() {
+        //Given
+        def email = "jakub@dzon.pl"
 
-          //When
-          def clients = service.findByEmail(email)
+        //When
+        def client = infaktClientService.findByEmail(email)
 
-          //Then
-          assertNotNull clients
-          assertEquals clients.size(), 1
-          assertEquals email, clients.get(0).email
-      }
+        //Then
+        assertNotNull client
+        assertEquals email, client.email
+    }
 
     @Test
     void shouldNotGetDataFromInfaktByNipForNotFoundClient() {
@@ -51,11 +49,10 @@ class InfaktClientServiceIntegrationTests {
         def nip = "111111"
 
         //When
-        def clients = service.findByNip(nip)
+        def client = infaktClientService.findByNip(nip)
 
         //Then
-        assertNotNull clients
-        assertEquals clients.size(), 0
+        assertNull client
     }
 
     @Test
@@ -64,11 +61,29 @@ class InfaktClientServiceIntegrationTests {
         def client = new Client(company_name: TEST_CLIENT_NAME, country: "PL")
 
         //When
-        def createdClient = service.create client
+        def createdClient = infaktClientService.create client
 
         //Then
         assertNotNull createdClient
         assertNotNull createdClient.id
         assertTrue createdClient.id > 0
+    }
+
+    @Test
+    void shouldUpdateClient() {
+        //Given
+        def client = new Client(company_name: TEST_CLIENT_NAME, country: "PL")
+        def createdClient = infaktClientService.create client
+        createdClient.country = "DE"
+
+        //When
+        def updatedClient = infaktClientService.update createdClient
+
+        //Then
+        assertNotNull updatedClient
+        assertNotNull updatedClient.id
+        assertTrue updatedClient.id > 0
+        assertEquals updatedClient.id, createdClient.id
+        assertEquals updatedClient.country, "DE"
     }
 }

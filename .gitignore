@@ -38,3 +38,5 @@
 
 # Local config
 /grails-app/conf/DevConfig.groovy
+
+*.sha1

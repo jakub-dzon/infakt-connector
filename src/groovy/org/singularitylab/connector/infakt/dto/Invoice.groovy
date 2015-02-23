@@ -15,8 +15,8 @@ class Invoice {
     Currency currency
     int paid_price
     String notes
-    Kind kind
-    PaymentMethod payment_method
+    String kind
+    String payment_method
     String recipient_signature
     String seller_signature
     String invoice_date
@@ -36,6 +36,13 @@ class Invoice {
     String bank_name
     String bank_account
     List<Service> services
+    String paid_date
+    String sale_type
+    String invoice_date_kind
+    String status
+    String vat_exemption_reason
+    String swift
+
 
     static enum Currency {
         THB, USD, AUD, HKD, CAD, NZD, SGD,
@@ -68,5 +75,16 @@ class Invoice {
         public String toString() {
             return name().toLowerCase()
         }
+    }
+
+    static enum SaleType {
+        MERCHANDISE,
+        SERVICE
+
+        @Override
+        public String toString() {
+            return name().toLowerCase()
+        }
+
     }
 }
