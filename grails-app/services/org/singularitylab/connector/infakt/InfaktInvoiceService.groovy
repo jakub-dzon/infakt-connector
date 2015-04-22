@@ -28,7 +28,10 @@ class InfaktInvoiceService extends InfaktService {
         if (log.isDebugEnabled()) {
             log.debug("Received response from Infakt: ${resp.text}")
         }
-
+        if (resp.status != 201) {
+            log.error(resp.text)
+            throw new RuntimeException("Cannot create invoice: " + resp.text)
+        }
         new Invoice(resp.json)
     }
 

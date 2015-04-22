@@ -42,6 +42,7 @@ class Invoice {
     String status
     String vat_exemption_reason
     String swift
+    String vat_exemption_reason_id
 
 
     static enum Currency {
