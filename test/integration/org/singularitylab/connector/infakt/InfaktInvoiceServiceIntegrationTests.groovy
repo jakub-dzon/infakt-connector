@@ -19,7 +19,8 @@ import static org.singularitylab.connector.infakt.dto.PaymentMethod.TRANSFER
 class InfaktInvoiceServiceIntegrationTests extends GroovyTestCase {
 
     def infaktInvoiceService
-    def infaktClientService
+    def invoiceExporterService
+    def infaktExporterService
 
     @Test
     void shouldGetNextInvoiceNumber() {
@@ -53,5 +54,23 @@ class InfaktInvoiceServiceIntegrationTests extends GroovyTestCase {
         assertNotNull createdInvoice.id
         assertTrue createdInvoice.id > 0
     }
+
+    @Test
+    void shouldListInvoices() {
+
+        //When
+        def invoices = infaktInvoiceService.list('kind', 'vat')
+        def invoicesAdvance = infaktInvoiceService.list('kind', 'advance')
+        def invoicesFinal = infaktInvoiceService.list('kind', 'final')
+
+        //Then
+        println invoices
+        println invoicesAdvance
+        println invoicesFinal
+
+        def csv = invoiceExporterService.exportToCsv(invoices + invoicesAdvance + invoicesFinal)
+
+    }
+
 
 }

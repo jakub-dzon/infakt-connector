@@ -1,5 +1,6 @@
 package org.singularitylab.connector.infakt
 
+import org.singularitylab.connector.infakt.dto.Client
 import org.singularitylab.connector.infakt.dto.Invoice
 
 /**
@@ -56,6 +57,19 @@ class InfaktInvoiceService extends InfaktService {
             log.debug("Received response from Infakt: ${resp.text}")
         }
 
+    }
+
+    def list(String property, String value) {
+        def resp = restBuilder.get(serviceUrl + "?q[invoice_date_gt]=2015-05-01&q[invoice_date_lt]=2015-06-01&q[${property}_eq]=${value}&order=number&offset=0&limit=500") {
+            header HEADER_API_KEY, infaktApiKey
+        }
+
+        if (log.isDebugEnabled()) {
+            log.debug("Received response from Infakt: ${resp.text}")
+        }
+        resp.json.entities.collect {
+            new Invoice(it)
+        }
     }
 
 }
